@@ -4,7 +4,7 @@
   "description": "Cloning Youtube with Vailla and NodeJS",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node index.js --delay 2"
+    "start": "nodemon --exec babel-node init.js --delay 2"
   },
   "author": "Minky",
   "license": "ISC",
