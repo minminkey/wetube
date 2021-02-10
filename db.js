@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
 mongoose.connect(
-  "mongodb://localhost:27017//we-tube",
+  "mongodb://localhost:27017/we-tube",
   {
     useNewUrlParser: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
   }
 );
 
