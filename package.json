@@ -4,7 +4,8 @@
   "description": "Cloning Youtube with Vailla and NodeJS",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node init.js --delay 2"
+    "dev:server": "nodemon --exec babel-node init.js --delay 2",
+    "dev:assets": "webpack"
   },
   "author": "Minky",
   "license": "ISC",
@@ -20,7 +21,9 @@
     "mongoose": "^5.11.16",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "webpack": "^5.24.0",
+    "webpack-cli": "^4.5.0"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
