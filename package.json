@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:server": "nodemon --exec babel-node init.js --delay 2",
-    "dev:assets": "webpack"
+    "dev:assets": "cross-env WEBPACK_ENV=development webpack",
+    "bulid:assets": "cross-env WEBPACK_ENV=production webpack"
   },
   "author": "Minky",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "helmet": "^4.4.1",
     "mongoose": "^5.11.16",
     "morgan": "^1.10.0",
@@ -26,11 +28,13 @@
     "webpack-cli": "^4.5.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
+    "mini-css-extract-plugin": "^1.3.8",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
   }
