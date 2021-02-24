@@ -1,6 +1,7 @@
 node_modules
 
-uploads/
+uploads
+static
 
 # Logs
 logs
@@ -120,3 +121,5 @@ dist
 .pnp.*
 
 package-lock.json
+static/main.js
+static/style.css
