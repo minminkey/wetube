@@ -15,6 +15,8 @@ import "./passport";
 
 const app = express(); //app을 만드는 과정
 
+const MongoStore = require("connect-mongo").default;
+
 app.use(
   helmet({
     contentSecurityPolicy: false,
@@ -32,6 +34,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );
 app.use(passport.initialize());
