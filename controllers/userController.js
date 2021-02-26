@@ -1,4 +1,6 @@
 import passport from "passport";
+import request from "request";
+import undefsafe from "undefsafe";
 import routes from "../routes";
 import User from "../models/User";
 
@@ -36,8 +38,94 @@ export const postLogin = passport.authenticate("local", {
   successRedirect: routes.home,
 });
 
+export const githubLogin = passport.authenticate("github");
+
+// export const githubLoginCallback = async (accessToken, _, profile, cb) => {
+//   const {
+//     _json: { id, avatar_url, name },
+//   } = profile;
+//   const email = undefsafe(profile, "emails.0.value");
+//   let promise = null;
+//   if (email) {
+//     promise = Promise.resolve(email);
+//   } else {
+//     promise = new Promise((resolve, reject) => {
+//       request(
+//         {
+//           url: "https://api.github.com/user/emails",
+//           json: true,
+//           headers: {
+//             "user-agent": "my user-agent",
+//             authorization: `token ${accessToken}`,
+//           },
+//         },
+//         (error, res, body) => {
+//           if (error) {
+//             return reject(error);
+//           }
+//           resolve(body.find((entry) => entry.primary).email);
+//         }
+//       );
+//     });
+//   }
+export const githubLoginCallback = async (accessToken, _, profile, cb) => {
+  const {
+    _json: { id, avatar_url, name },
+  } = profile;
+
+  const emails = undefsafe(profile, "emails.0.value");
+  let promise = null;
+
+  if (emails) {
+    promise = Promise.resolve(emails);
+  } else {
+    promise = new Promise((resolve, reject) => {
+      request(
+        {
+          url: "https://api.github.com/user",
+          json: true,
+          headers: {
+            "user-agent": "my user-agent",
+            authorization: `token ${accessToken}`,
+          },
+        },
+        (error, res, body) => {
+          if (error) {
+            return reject(error);
+          }
+          console.log(body);
+          // resolve(body.find((entry) => entry.primary).emails);
+        }
+      );
+    });
+  }
+  promise.then(async (email) => {
+    try {
+      const user = await User.findOne({ email });
+      if (user) {
+        user.githubId = id;
+        user.save();
+        return cb(null, user);
+      }
+      const newUser = await User.create({
+        email,
+        name,
+        githbId: id,
+        avatarUrl: avatar_url,
+      });
+      return cb(null, newUser);
+    } catch (error) {
+      return cb(error);
+    }
+  });
+};
+
+export const postGithubLogIn = (req, res) => {
+  res.redirect(routes.home);
+};
+
 export const logout = (req, res) => {
-  //To Do: Process Log OUt
+  req.logout();
   res.redirect(routes.home);
 };
 
