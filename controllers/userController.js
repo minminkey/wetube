@@ -70,7 +70,7 @@ export const githubLogin = passport.authenticate("github");
 //   }
 export const githubLoginCallback = async (accessToken, _, profile, cb) => {
   const {
-    _json: { id, avatar_url, name },
+    _json: { id, avatar_url: avatarUrl, name },
   } = profile;
 
   const emails = undefsafe(profile, "emails.0.value");
@@ -94,7 +94,8 @@ export const githubLoginCallback = async (accessToken, _, profile, cb) => {
             return reject(error);
           }
           console.log(body);
-          // resolve(body.find((entry) => entry.primary).emails);
+          resolve(body.find((entry) => entry.primary).emails);
+          return body;
         }
       );
     });
@@ -111,7 +112,7 @@ export const githubLoginCallback = async (accessToken, _, profile, cb) => {
         email,
         name,
         githbId: id,
-        avatarUrl: avatar_url,
+        avatarUrl,
       });
       return cb(null, newUser);
     } catch (error) {
@@ -127,6 +128,10 @@ export const postGithubLogIn = (req, res) => {
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
+};
+
+export const getMe = (req, res) => {
+  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
 };
 
 export const userDetail = (req, res) =>
