@@ -20,9 +20,12 @@ const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
 //Github
-
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
+
+//Facebook
+const KA = "/auth/kakao";
+const KA_CALLBACK = "/auth/kakao/callback";
 
 const routes = {
   home: HOME,
@@ -67,6 +70,8 @@ const routes = {
   gitHub: GITHUB,
   githubCallback: GITHUB_CALLBACK,
   me: ME,
+  kakao: KA,
+  kakaoCallback: KA_CALLBACK,
 };
 
 export default routes;

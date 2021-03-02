@@ -1,8 +1,12 @@
 import dotenv from "dotenv";
 
 import passport from "passport";
+import KakaoStrategy from "passport-kakao";
 import GithubStrategy from "passport-github";
-import { githubLoginCallback } from "./controllers/userController";
+import {
+  githubLoginCallback,
+  kakaoLoginCallback,
+} from "./controllers/userController";
 import User from "./models/User";
 import routes from "./routes";
 
@@ -17,6 +21,17 @@ passport.use(
       redirect_url: `http://localhost:4000${routes.githubCallback}`,
     },
     githubLoginCallback
+  )
+);
+
+passport.use(
+  new KakaoStrategy(
+    {
+      clientID: process.env.KA_ID,
+      clientSecret: "",
+      callbackURL: `http://localhost:4000${routes.kakaoCallback}`,
+    },
+    kakaoLoginCallback
   )
 );
 
