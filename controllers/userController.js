@@ -40,34 +40,6 @@ export const postLogin = passport.authenticate("local", {
 
 export const githubLogin = passport.authenticate("github");
 
-// export const githubLoginCallback = async (accessToken, _, profile, cb) => {
-//   const {
-//     _json: { id, avatar_url, name },
-//   } = profile;
-//   const email = undefsafe(profile, "emails.0.value");
-//   let promise = null;
-//   if (email) {
-//     promise = Promise.resolve(email);
-//   } else {
-//     promise = new Promise((resolve, reject) => {
-//       request(
-//         {
-//           url: "https://api.github.com/user/emails",
-//           json: true,
-//           headers: {
-//             "user-agent": "my user-agent",
-//             authorization: `token ${accessToken}`,
-//           },
-//         },
-//         (error, res, body) => {
-//           if (error) {
-//             return reject(error);
-//           }
-//           resolve(body.find((entry) => entry.primary).email);
-//         }
-//       );
-//     });
-//   }
 export const githubLoginCallback = async (accessToken, _, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name },
@@ -93,7 +65,6 @@ export const githubLoginCallback = async (accessToken, _, profile, cb) => {
           if (error) {
             return reject(error);
           }
-          console.log(body);
           resolve(body.find((entry) => entry.primary).emails);
           return body;
         }
@@ -128,7 +99,6 @@ export const postGithubLogIn = (req, res) => {
 export const kakaoLogin = passport.authenticate("kakao");
 
 export const kakaoLoginCallback = async (_, __, profile, cb) => {
-  console.log(profile);
   const {
     id,
     username: name,
@@ -166,9 +136,16 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const getMe = (req, res) => {
-  console.log(req.user);
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+export const getMe = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const user = await User.findById(req.user.id).populate("videos");
+    res.render("userDetail", { pageTitle: "User Detail", user: user });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
 };
 
 export const userDetail = async (req, res) => {
@@ -176,8 +153,9 @@ export const userDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id);
-
+    const user = await User.findById(id).populate("videos");
+    console.log("hello");
+    console.log(user);
     res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
     res.redirect(routes.home);
