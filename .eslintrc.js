@@ -10,9 +10,10 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    "prettier/prettier": "off",
+    "pretter/prettier": "off",
     "no-console": "off",
     "spaced-comment": "off",
     "no-else-return": "off",
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
 };
