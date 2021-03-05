@@ -6,8 +6,7 @@ const UserSchema = new mongoose.Schema({
   email: String,
   avatarUrl: {
     type: String,
-    default:
-      "https://lh3.googleusercontent.com/proxy/9klF-yog5dFG-zFxvuQHtDm-lRNkoiZTBHsDUNfhOr1qP-XnC7i5mycqLQWIDyg5FnuKBubBmBoztCP9oP6MPvVIdA-UnGmZnDlZT0fwpRo5rYoJcrKw8spm9fLcC4jeCScMcI2orE46m2u4rvsxvakCy0uUOwUscFjMsAP2",
+    default: "uploads/avatars/bb50cc9e8fdd29e2e18a9b84355a392e",
   },
   facebookId: Number,
   githubId: Number,
