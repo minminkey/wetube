@@ -16,4 +16,7 @@ module.exports = {
     "no-else-return": "off",
     "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
+  env: {
+    brower: true,
+  },
 };
