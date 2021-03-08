@@ -53,6 +53,14 @@
         padding: 15px;
         border-radius: 20px;
         border-bottom-left-radius: 0px;
+        .jsCancel {
+          float: right;
+        }
+        .jsCancel:hover {
+          border: 0;
+          cursor: pointer;
+          opacity: 0.75;
+        }
         &:not(:last-child) {
           margin-bottom: 15px;
         }

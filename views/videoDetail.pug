@@ -34,3 +34,6 @@ block content
                 each comment in video.comments.reverse()
                     li
                         span=comment.text
+                        if loggedUser && comment.creator == loggedUser.id
+                            //- a(href=routes.deleteComment(comment._id))
+                            span(class='jsCancel' id=comment.id) &times;
