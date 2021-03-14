@@ -9,6 +9,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import session from "express-session";
 import path from "path";
+import flash from "express-flash";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
@@ -52,6 +53,7 @@ app.use(function (req, res, next) {
   );
   return next();
 });
+app.use(flash());
 
 app.use(localsMiddleware);
 
